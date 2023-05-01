@@ -16,7 +16,7 @@ namespace Crop_deal_1.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            int aman = 0;
+            int Delaman = 0;
             return View();
         }
     }
