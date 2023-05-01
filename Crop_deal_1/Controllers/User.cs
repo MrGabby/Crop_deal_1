@@ -1,24 +1,20 @@
 ﻿using Crop_deal_1.Data;
+using Crop_deal_1.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
+
 
 namespace Crop_deal_1.Controllers
 {
     [ApiController]
     [Route("api/[Controller]")]
-    public class User : Controller
+    public class UserController : Controller
     {
         private readonly ApiDbContext context;
 
-        public User(ApiDbContext context)
+        public UserController(ApiDbContext context)
         {
-            this.context = context;  
-        }
-        [HttpGet]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            var users = await context.Users.ToListAsync();
-            return Ok(users);
+            this.context = context;
         }
 
         [HttpGet("{id}")]
@@ -71,6 +67,27 @@ namespace Crop_deal_1.Controllers
             }
 
             return Ok(user);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateUser([FromBody] User userDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = new User
+            {
+                User_name = userDto.User_name,
+                Email_id = userDto.Email_id,
+                Is_Active = userDto.Is_Active
+            };
+
+            context.Users.Add(user);
+            await context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetUserById), new { id = user.User_id }, user);
         }
     }
 }
