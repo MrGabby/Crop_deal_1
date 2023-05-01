@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Data.Entity;
 using System.Drawing.Drawing2D;
 
-
 namespace Crop_deal_1.Controllers
 {
     [ApiController]
@@ -81,19 +80,21 @@ namespace Crop_deal_1.Controllers
             return Ok(user);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] User userDto)
+        [HttpGet]
+        public async Task<IActionResult> GetAllUsers()
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+            var users = await context.Users.ToListAsync();
+            return Ok(users);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(string name, string email, bool is_active)
+        {
             var user = new User
             {
-                User_name = userDto.User_name,
-                Email_id = userDto.Email_id,
-                Is_Active = userDto.Is_Active
+                User_name = name,
+                Email_id = email,
+                Is_Active = is_active
             };
 
             context.Users.Add(user);
