@@ -13,8 +13,10 @@ namespace Crop_deal_1.Controllers
         {
             this.context = context;  
         }
+        [HttpGet]
         public IActionResult Index()
         {
+            int aman = 0;
             return View();
         }
     }
