@@ -47,32 +47,6 @@ namespace Crop_deal_1.Controllers
             return Ok(user);
         }
 
-        [HttpGet("Contact/{contact}")]
-        public async Task<IActionResult> GetUserByContact(string contact)
-        {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.User_contact == contact);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
-        [HttpGet("Role/{role}")]
-        public async Task<IActionResult> GetUserByRole(string role)
-        {
-            var user = await context.Users.Where(u => u.User_roles.ToLower() == role.ToLower()).ToListAsync();
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
         [HttpGet("Email/{email}")]
         public async Task<IActionResult> GetUserByEmail(string email)
         {
@@ -98,46 +72,5 @@ namespace Crop_deal_1.Controllers
 
             return Ok(user);
         }
-
-        [HttpGet("Subscribe/{isSubscribe}")]
-        public async Task<IActionResult> GetUserBySubscribe(bool isSubscribe)
-        {
-            var user = await context.Users.Where(u => u.Is_subscribe == isSubscribe).ToListAsync();
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
-        [HttpGet("Bank/{bankName}")]
-        public async Task<IActionResult> GetUserByBankName(string bankName)
-        {
-            var user = await context.Users.Where(u => u.Bank_name.ToLower() == bankName.ToLower()).ToListAsync();
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
-        [HttpGet("Account/{accountNo}")]
-        public async Task<IActionResult> GetUserByBankAccountNo(string accountNo)
-        {
-            var user = await context.Users.FirstOrDefaultAsync(u => u.Bank_account_no == accountNo);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(user);
-        }
-
-
     }
 }
