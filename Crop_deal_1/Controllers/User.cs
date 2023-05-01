@@ -1,7 +1,9 @@
 ﻿using Crop_deal_1.Data;
 using Crop_deal_1.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Data.Entity;
+using System.Drawing.Drawing2D;
 
 
 namespace Crop_deal_1.Controllers
@@ -15,6 +17,16 @@ namespace Crop_deal_1.Controllers
         public UserController(ApiDbContext context)
         {
             this.context = context;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        {
+            if (context.Users == null)
+            {
+                return NotFound();
+            }
+            return await context.Users.ToListAsync();
         }
 
         [HttpGet("{id}")]
